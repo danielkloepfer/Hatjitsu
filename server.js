@@ -239,4 +239,16 @@ io.on('connection', function (socket) {
     }
   });
 
+  socket.on('change voter name', function (data, callback) {
+    statsSocketMessagesReceived++;
+    // console.log("on change voter name for " + data.roomUrl, socket.id, data);
+    var room = lobby.getRoom(data.roomUrl);
+    if (room.error) {
+      callback( { error: room.error });
+    } else {
+      room.changeVoterName(data);
+      callback( {} );
+    }
+  });
+
 });

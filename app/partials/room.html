@@ -50,6 +50,11 @@
       <input type="checkbox" ng-model="voter" ng-disabled="forceRevealDisable" ng-change="toggleVoter()">
       <label class="btn" data-on="You are a voter" data-off="You are not a voter">I am voting</label>
     </div>
+    <div class="voter-name" ng-show="voter">
+      <label for="voter-name">Name</label>
+      <input id="voter-name" type="text" ng-model="voterName" ng-change="changeVoterName()">
+    </div>
+
 
     <div ng-switch on="voter">
 
@@ -82,6 +87,12 @@
           <i class="icon"><span class="icon-clipboard"></span></i> &nbsp;
         </span>
       </span>
+    </div>
+
+    <div class="cards{{votingState}}" id="voterNames">
+      <div ng-repeat="vote in votes" class="card card--2-sided vote">
+        <div class="card--side-2" ng-show="vote.voterName" style="font-size: small; line-height: 1.5em;">{{ vote.voterName }}</div>
+      </div>
     </div>
 
     <div ng-switch on="showAdmin" >

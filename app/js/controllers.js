@@ -140,10 +140,10 @@ function RoomCtrl($scope, $routeParams, $timeout, socket) {
     $scope.showAverage = (voteArr.length === 0 && cardValues.length > 0) || $scope.forcedReveal;
 
     $scope.forceRevealDisable = (!$scope.forcedReveal && ($scope.votes.length < $scope.voterCount || $scope.voterCount === 0)) ? false : true;
-    console.log("forceRevealDisable", $scope.forceRevealDisable)
-    console.log("alreadySorted;", $scope.alreadySorted)
+    // console.log("forceRevealDisable", $scope.forceRevealDisable)
+    // console.log("alreadySorted;", $scope.alreadySorted)
     $scope.sortVotesDisable = !$scope.forceRevealDisable || $scope.alreadySorted;
-    console.log("sortVotesDisable", $scope.sortVotesDisable)
+    // console.log("sortVotesDisable", $scope.sortVotesDisable)
 
     if ($scope.votes.length === $scope.voterCount || $scope.forcedReveal) {
       if ($scope.alreadySorted) {
@@ -197,7 +197,7 @@ function RoomCtrl($scope, $routeParams, $timeout, socket) {
     $scope.voted = haveIVoted();
     if (!voteHash) {
       // initialize connections array with my first vote. (just to speed up UI)
-      $scope.votes.push({ sessionId: $scope.sessionId, vote: vote });
+      $scope.votes.push({ sessionId: $scope.sessionId, vote: vote, voterName: $scope.voterName });
     } else {
       if (vote) {
         voteHash.vote = vote;
@@ -276,6 +276,7 @@ function RoomCtrl($scope, $routeParams, $timeout, socket) {
     if (connection) {
       $scope.voter = connection.voter;
       $scope.myVote = connection.vote;
+      $scope.voterName = connection.voterName;
       $scope.voted = haveIVoted();
     }
 
@@ -449,11 +450,19 @@ function RoomCtrl($scope, $routeParams, $timeout, socket) {
     });
   };
 
+  $scope.changeVoterName = function() {
+    // console.log("emit change voter name", { roomUrl: $scope.roomId, voter: $scope.voterName, sessionId: $scope.sessionId });
+    socket.emit('change voter name', { roomUrl: $scope.roomId, voterName: $scope.voterName, sessionId: $scope.sessionId }, function (response) {
+      processMessage(response);
+    });
+  }
+
   $scope.roomId = $routeParams.roomId;
   $scope.humanCount = 0;
   $scope.voterCount = 0;
   $scope.showAdmin = false;
   $scope.voter = true;
+  $scope.voterName = null;
   $scope.connections = {};
   $scope.votes = [];
   $scope.cardPack = '';

@@ -870,6 +870,17 @@ a:hover, a:focus {
     background-position: -28px 0;
 }
 
+.voter-name {
+    margin: 1em;
+}
+
+.voter-name input {
+    padding: 4px 20px;
+    margin: 6px 0;
+    border-radius: 4px;
+
+}
+
 .no-checked .switch .btn:before, .no-checked .switch .btn:after {
     display: none;
 }
