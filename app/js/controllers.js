@@ -450,11 +450,15 @@ function RoomCtrl($scope, $routeParams, $timeout, socket) {
     });
   };
 
-  $scope.changeVoterName = function() {
+  var changeVoterNameDebounced = function changeVoterNameDebounced() {
     // console.log("emit change voter name", { roomUrl: $scope.roomId, voter: $scope.voterName, sessionId: $scope.sessionId });
     socket.emit('change voter name', { roomUrl: $scope.roomId, voterName: $scope.voterName, sessionId: $scope.sessionId }, function (response) {
       processMessage(response);
     });
+  }
+  var wrappedFunction = _.debounce(changeVoterNameDebounced, 500);
+  $scope.changeVoterName = function() {
+    wrappedFunction();
   }
 
   $scope.roomId = $routeParams.roomId;
