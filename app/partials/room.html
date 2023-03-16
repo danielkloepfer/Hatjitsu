@@ -89,9 +89,9 @@
       </span>
     </div>
 
-    <div class="cards{{votingState}}" id="voterNames">
-      <div ng-repeat="vote in votes" class="card card--2-sided vote">
-        <div class="card--side-2" ng-show="vote.voterName" style="font-size: small; line-height: 1.5em;">{{ vote.voterName }}</div>
+    <div class="cards{{votingState}}" id="voterNames" style="height: 3em;">
+      <div ng-repeat="vote in votes" class="card card--2-sided vote" style="height: 0em">
+        <div class="card--side-2" ng-show="vote.voterName" style="font-size: small; line-height: 1.5em">{{ vote.voterName }}</div>
       </div>
     </div>
 
